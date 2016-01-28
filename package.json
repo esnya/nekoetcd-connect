@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/ukatama/beniimo-etcd-connect/issues"
   },
-  "homepage": "https://github.com/ukatama/beniimo-etcd-connect#readme"
+  "homepage": "https://github.com/ukatama/beniimo-etcd-connect#readme",
+  "dependencies": {
+    "fs-promise": "^0.3.1",
+    "request-promise": "^2.0.0"
+  }
 }
