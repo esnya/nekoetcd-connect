@@ -9,8 +9,8 @@ const hosts = os.platform() === 'win32'
         ? `${process.env.SystemRoot}/System32/drivers/etc/hosts`
         : '/etc/hosts';
 const logger = console;
-const etcdPort = process.env.ETCD_PORT || 4001;
-const port = process.env.PORT;
+const etcd = process.env.ETCD_URL || 'http://etcd:4001';
+const port = process.env.APP_PORT;
 
 const update = () => {
     logger.info('Updating ip address');
@@ -35,7 +35,7 @@ const update = () => {
         .then((address) => port ? `${address}:${port}` : address)
         .then((address) => request({
                 method: 'PUT',
-                uri: `http://etcd:${etcdPort}/v2/keys/${app}?value=${address}`,
+                uri: `${etcd}/v2/keys/${app}?value=${address}`,
                 json: true,
             })
             .then((data) => {
