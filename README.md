@@ -1,2 +1,2 @@
-# beniimo-etcd-connect
-Application interface to connect beniimo-proxy with etcd
+# nekoetcd-connect
+Application interface to connect nekoproxy with etcd

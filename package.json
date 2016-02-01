@@ -1,7 +1,7 @@
 {
-  "name": "beniimo-etcd-connect",
+  "name": "nekoetcd-connect",
   "version": "1.0.0",
-  "description": "Application interface to connect beniimo-proxy with etcd",
+  "description": "Application interface to connect nekoproxy with etcd",
   "main": "index.js",
   "scripts": {
     "start": "node .",
