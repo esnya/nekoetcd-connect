@@ -35,7 +35,7 @@ const update = () => {
         .then((address) => port ? `${address}:${port}` : address)
         .then((address) => request({
                 method: 'PUT',
-                uri: `http://etcd:${port}/v2/keys/${app}?value=${address}`,
+                uri: `http://etcd:${etcdPort}/v2/keys/${app}?value=${address}`,
                 json: true,
             })
             .then((data) => {
