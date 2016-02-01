@@ -9,7 +9,8 @@ const hosts = os.platform() === 'win32'
         ? `${process.env.SystemRoot}/System32/drivers/etc/hosts`
         : '/etc/hosts';
 const logger = console;
-const port = process.env.PORT || 4001;
+const etcdPort = process.env.ETCD_PORT || 4001;
+const port = process.env.PORT;
 
 const update = () => {
     logger.info('Updating ip address');
@@ -31,6 +32,7 @@ const update = () => {
             (address) => 
                 address || Promise.reject(new Error('Failed to resolve app to address'))
         )
+        .then((address) => port ? `${address}:${port}` : address)
         .then((address) => request({
                 method: 'PUT',
                 uri: `http://etcd:${port}/v2/keys/${app}?value=${address}`,
