@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/ukatama/beniimo-etcd-connect#readme",
   "dependencies": {
-    "fs-promise": "^0.3.1",
+    "fs-promise": "^0.4.1",
     "request-promise": "^2.0.0"
   }
 }
