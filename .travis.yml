@@ -7,7 +7,10 @@ env:
 before_script:
     - docker build -t nekoetcd-connect .
     - docker run -d --name ${APP_CONTAINER_ID} busybox tail -f
-    - docker run -d --name ${ETCD_CONTAINER_ID} quay.io/coreos/etcd
-    - docker run -d --link ${ETCD_CONTAINER_ID}:etcd --link ${APP_CONTAINER_ID}:${APP_NAME} -e APP_NAME=${APP_NAME} --name ${TARGET_CONTAINER_ID} nekoetcd-connect
+    - docker run -d --name ${ETCD_CONTAINER_ID} quay.io/coreos/etcd --listen-client-urls=http://0.0.0.0:2379,http://0.0.0.0:4001 --advertise-client-urls=http://0.0.0.0:2379,http://0.0.0.0:4001
+    - docker run -d --link ${ETCD_CONTAINER_ID}:etcd --link ${APP_CONTAINER_ID}:${APP_NAME} -e APP=${APP_NAME} --name ${TARGET_CONTAINER_ID} nekoetcd-connect
+    - sleep 10
+    - docker ps
+    - docker logs ${TARGET_CONTAINER_ID}
 script:
     - bundle exec rspec
