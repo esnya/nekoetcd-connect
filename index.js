@@ -15,7 +15,19 @@ const port = process.env.APP_PORT;
 const update = () => {
     logger.info('Updating ip address');
 
-    fs.readFile(hosts)
+    request({
+            uri: `${etcd}/v2/keys/backends`,
+            json: true,
+        })
+        .then((data) => data.node && data.node.dir)
+        .catch(() => false)
+        .then((exists) => exists || request({
+                method: 'PUT',
+                uri: `${etcd}/v2/keys/backends?dir=true`,
+            })
+            .then((data) => data.node && data.node.dir)
+        )
+        .then(() => fs.readFile(hosts))
         .then((file) => file.toString()
                 .split(/\r\n|\n/)
                 .map((line) =>
@@ -35,7 +47,7 @@ const update = () => {
         .then((address) => port ? `${address}:${port}` : address)
         .then((address) => request({
                 method: 'PUT',
-                uri: `${etcd}/v2/keys/${app}?value=${address}`,
+                uri: `${etcd}/v2/keys/backends/${app}?value=${address}`,
                 json: true,
             })
             .then((data) => {
