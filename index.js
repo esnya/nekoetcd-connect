@@ -25,6 +25,10 @@ const update = () => {
                 method: 'PUT',
                 uri: `${etcd}/v2/keys/backends?dir=true`,
             })
+            .catch((e) => request({
+                uri: `${etcd}/v2/keys/backends`,
+                json: true,
+            }))
             .then((data) => data.node && data.node.dir)
         )
         .then(() => fs.readFile(hosts))
