@@ -45,9 +45,10 @@ const update = () => {
                 address || Promise.reject(new Error('Failed to resolve app to address'))
         )
         .then((address) => port ? `${address}:${port}` : address)
-        .then((address) => request({
+        .then((host) => `http://${host}`)
+        .then((target) => request({
                 method: 'PUT',
-                uri: `${etcd}/v2/keys/backends/${app}?value=${address}`,
+                uri: `${etcd}/v2/keys/backends/${app}?value=${target}`,
                 json: true,
             })
             .then((data) => {
